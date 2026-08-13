@@ -4,53 +4,54 @@ const CONFIG = require('../../../config.js');
 const ORM = require('./ORM.js');
 
 class DB {
-    constructor() {
-        this.db = null;
-        this.orm = null;
-        (async () => {
-            this.db = await open({
-                filename: CONFIG.SQLITE_PATH,
-                driver: sqlite3.Database,
-                mode: sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE
-            });
-            
-            await this.db.run('PRAGMA foreign_keys = ON');
-    
-            this.orm = new ORM(this);    
-        })();
+    constructor(db) {
+        this.db = db;
+        this.orm = new ORM(this);
     }
 
     // ============ BASE METHODS ============
-    execute(sql, params = []) {
+    async execute(sql, params = []) {
         return this.db.run(sql, params);
     }
 
-    query(sql, params = []) {
+    async query(sql, params = []) {
         return this.db.get(sql, params);
     }
 
-    queryAll(sql, params = []) {
+    async queryAll(sql, params = []) {
         return this.db.all(sql, params);
     }
 
     // ============ USER METHODS ============
-    getUserByGuid(guid) {
-        return this.orm.get('users', { guid });
+    async getUserByGuid(guid) {
+        const sql = `
+            SELECT 
+                id,
+                login,
+                password,
+                guid,
+                token,
+                role_id as roleId,
+                delivery_address as deliveryAddress
+            FROM users
+            WHERE guid = ?
+        `;
+        return this.query(sql, [guid]);
     }
 
-    getUserByLogin(login) {
+    async getUserByLogin(login) {
         return this.orm.get('users', { login });
     }
 
-    getUserByToken(token) {
+    async getUserByToken(token) {
         return this.orm.get('users', { token });
     }
 
-    updateToken(userGuid, token) {
+    async updateToken(userGuid, token) {
         return this.orm.update('users', { guid: userGuid }, { token });
     }
 
-    createUser(login, passwordHash, guid, token) {
+    async createUser(login, passwordHash, guid, token) {
         return this.orm.insert('users', {
             login,
             password: passwordHash,
@@ -59,9 +60,125 @@ class DB {
         });
     }
 
-    clearToken(userGuid) {
+    async clearToken(userGuid) {
         return this.orm.update('users', { guid: userGuid }, { token: null });
+    }
+
+    // ============ ORDER METHODS ============
+    async getProductById(id) {
+        const sql = `
+            SELECT 
+                id,
+                name,
+                price,
+                brand_id as brandId,
+                gender_id as genderId,
+                type_id as typeId,
+                stock_quantity as stockQuantity
+            FROM products
+            WHERE id = ?
+        `;
+        return this.query(sql, [id]);
+    }
+
+    async getOrderById(id) {
+        const sql = `
+            SELECT 
+                id,
+                user_id as userId,
+                order_time as orderTime,
+                status_id as statusId
+            FROM orders
+            WHERE id = ?
+        `;
+        return this.query(sql, [id]);
+    }
+
+    async getOrdersByUserId(userId) {
+        const sql = `
+            SELECT 
+                id,
+                user_id as userId,
+                order_time as orderTime,
+                status_id as statusId
+            FROM orders
+            WHERE user_id = ?
+            ORDER BY order_time DESC
+        `;
+        return this.queryAll(sql, [userId]);
+    }
+
+    async getOrderProducts(orderId) {
+        const sql = `
+            SELECT 
+                op.product_id as productId,
+                op.quantity,
+                p.name,
+                p.price,
+                p.stock_quantity as stockQuantity,
+                b.type as brand,
+                g.type as gender,
+                ut.type as underwearType
+            FROM order_product op
+            JOIN products p ON op.product_id = p.id
+            LEFT JOIN brands b ON p.brand_id = b.id
+            LEFT JOIN genders g ON p.gender_id = g.id
+            LEFT JOIN underwear_types ut ON p.type_id = ut.id
+            WHERE op.order_id = ?
+        `;
+        return this.queryAll(sql, [orderId]);
+    }
+
+    async createOrder(userId, orderTime, statusId) {
+        return this.orm.insert('orders', {
+            user_id: userId,
+            order_time: orderTime,
+            status_id: statusId,
+        });
+    }
+
+    async addOrderProduct(orderId, productId, quantity) {
+        return this.orm.insert('order_product', {
+            order_id: orderId,
+            product_id: productId,
+            quantity: quantity,
+        });
+    }
+
+    async updateProductStock(productId, quantityChange) {
+        const sql = `
+            UPDATE products 
+            SET stock_quantity = stock_quantity + ? 
+            WHERE id = ? AND stock_quantity + ? >= 0
+        `;
+        
+        try {
+            const result = await this.execute(sql, [quantityChange, productId, quantityChange]);
+            return result.changes > 0;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async updateOrderStatus(orderId, statusId) {
+        return this.orm.update('orders', { id: orderId }, { status_id: statusId });
+    }
+
+    async deleteOrder(orderId) {
+        await this.orm.delete('order_product', { order_id: orderId });
+        return this.orm.delete('orders', { id: orderId });
     }
 }
 
-module.exports = DB;
+// функция для создания экземпляра БД
+async function createDB() {
+    const db = await open({
+        filename: CONFIG.SQLITE_PATH,
+        driver: sqlite3.Database,
+        mode: sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE
+    });
+    await db.run('PRAGMA foreign_keys = ON');
+    return new DB(db);
+}
+
+module.exports = { DB, createDB };

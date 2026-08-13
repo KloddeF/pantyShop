@@ -1,5 +1,9 @@
-const useTestHandler = require("./testHandlers/useTestHandler");
+const useCreateOrderHandler = require('./orderHandlers/useCreateOrderHandler');
+const useGetOrdersByUserHandler = require('./orderHandlers/useGetOrdersByUserHandler');
+const useCancelOrderHandler = require('./orderHandlers/useCancelOrderHandler');
 
 module.exports = {
-    useTestHandler,
+    useCreateOrderHandler,
+    useGetOrdersByUserHandler,
+    useCancelOrderHandler,
 };

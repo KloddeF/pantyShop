@@ -4,25 +4,24 @@ class CONFIG {
 
     static SQLITE_PATH = './application/modules/db/pantyShop.db'; // Путь к бд
 
-    static TEST1 = {
-        TEST: '/test',
-    }
-
     static ROLES = {
-        GUEST: 'guest',
         USER: 'user',
         ADMIN: 'admin',
     }
 
-    //events
+    // ивенты
     static EVENTS = {
+        CREATE_ORDER: 'createOrder',
+        GET_ORDERS_BY_USER: 'getOrdersByUser',
+        CANCEL_ORDER: 'cancelOrder',
     }
 
+    // триггеры
     static TRIGGERS = {
     }
 
     // сокетные сообщения
-   static MESSAGES = {
+    static MESSAGES = {
     }
 
 }
