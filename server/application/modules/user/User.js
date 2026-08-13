@@ -8,6 +8,7 @@ class User {
         this.login = null;
         this.guid = null;
         this.token = null;
+        this.roleId = null;
     }
 
     get() {
@@ -28,6 +29,7 @@ class User {
         this.login = userData.login;
         this.guid = userData.guid;
         this.token = token;
+        this.roleId = userData.roleId;
     }
 
     isLogin() {

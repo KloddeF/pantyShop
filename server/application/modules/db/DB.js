@@ -57,6 +57,7 @@ class DB {
             password: passwordHash,
             guid,
             token,
+            role_id: 1,
         });
     }
 
