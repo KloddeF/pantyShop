@@ -22,21 +22,9 @@ class Store {
         this.mediator.subscribe(MEDIATOR.EVENTS.REGISTRATION, (data) => this.handleRegistration(data));
         this.mediator.subscribe(MEDIATOR.EVENTS.LOGOUT, (data) => this.handleLogout(data));
         this.mediator.subscribe(MEDIATOR.EVENTS.SHOW_ERROR, (message: string) => this.handleError(message));
-        this.mediator.subscribe(MEDIATOR.EVENTS.CREATE_LOBBY, (data) => this.handleCreateLobby(data));
-        this.mediator.subscribe(MEDIATOR.EVENTS.JOIN_TO_LOBBY, (data) => this.handleJoinToLobby(data));
-        this.mediator.subscribe(MEDIATOR.EVENTS.LEAVE_LOBBY, (data) => this.handleLeaveLobby(data));
-        this.mediator.subscribe(EMESSAGES.DROP_FROM_LOBBY, (data) => this.handleDropFromLobby(data));
-        this.mediator.subscribe(MEDIATOR.EVENTS.START_GAME, (data) => this.handleStartGame(data));
-        this.mediator.subscribe(MEDIATOR.EVENTS.LOBBY_UPDATED, (data) => this.handleLobbyUpdated(data));
-        this.mediator.subscribe(MEDIATOR.EVENTS.LOBBIES_LIST_UPDATED, (data) => this.handleLobbiesListUpdated(data));
-        this.mediator.subscribe(MEDIATOR.EVENTS.SET_READY, (data) => this.handleSetReady(data));
-
+       
         this.mediator.set(MEDIATOR.TRIGGERS.GET_TOKEN, () => this.getToken());
-        this.mediator.set(MEDIATOR.TRIGGERS.GET_LOBBIES, () => this.getLobbies());
-        this.mediator.set(EMESSAGES.GET_CURRENT_LOBBY, () => this.getCurrentLobby());
-        this.mediator.set(EMESSAGES.GET_USER, () => this.getUser());
-        this.mediator.set(MEDIATOR.TRIGGERS.SET_GENERATED_MAP, (data) => this.setGeneratedMap(data));
-        this.mediator.set(MEDIATOR.TRIGGERS.GET_GENERATED_MAP, () => this.getGeneratedMap());
+        this.mediator.set(EMESSAGES.GET_USER, () => this.getUser())
     }
 
     handleLogin(data: TUser): void {
