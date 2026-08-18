@@ -1,5 +1,5 @@
 class CONFIG {
-    static SERVER_PORT = '1000'; // Хост сервера
+    static SERVER_PORT = '3001'; // Хост сервера
     static SERVER_NAME = 'PANTY_SHOP';  // Имя сервера
 
     static SQLITE_PATH = './application/modules/db/pantyShop.db'; // Путь к бд

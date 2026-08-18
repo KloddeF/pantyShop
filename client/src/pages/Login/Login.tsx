@@ -36,7 +36,7 @@ const Login: React.FC<IBasePage> = (props) => {
 
         const loginHandler = () => {
             setError(null);
-            setPage(PAGES.LOBBY);
+            setPage(PAGES.MAIN_PAGE);
         };
 
         const serverErrorHandler = (error: TError) => {

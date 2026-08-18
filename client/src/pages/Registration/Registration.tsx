@@ -39,7 +39,7 @@ const Registration: React.FC<IBasePage> = (props) => {
 
         const registrationHandler = () => {
             setError(null);
-            setPage(PAGES.LOGIN);
+            setPage(PAGES.MAIN_PAGE);
         };
 
         const serverErrorHandler = (error: TError) => {

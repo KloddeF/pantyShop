@@ -59,8 +59,10 @@ class User {
         await this.db.createUser(login, passwordHash, guid, token);
 
         const userData = await this.db.getUserByGuid(guid);
+        console.log(userData, token)
         this._fillData(userData, token);
         
+        console.log(2)
         return this;
     }
 
