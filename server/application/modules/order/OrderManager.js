@@ -109,7 +109,7 @@ class OrderManager extends BaseManager {
             return this.answer.bad(2004);
         }
 
-        // проверяем, что статус заказа точно 1 - Оформлен
+        // проверяем, что статус заказа 1 - Оформлен
         if (order.statusId !== 1) {
             return this.answer.bad(2005);
         }
@@ -122,8 +122,8 @@ class OrderManager extends BaseManager {
             await this.db.updateProductStock(product.productId, product.quantity);
         }
 
-        // меняем статус заказа на 4 - Отменен
-        await this.db.updateOrderStatus(orderId, 4);
+        // меняем статус заказа на 6 - Отменен
+        await this.db.updateOrderStatus(orderId, 6);
         
         return this.answer.good(true);
     }

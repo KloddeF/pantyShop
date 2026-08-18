@@ -169,6 +169,71 @@ class DB {
         await this.orm.delete('order_product', { order_id: orderId });
         return this.orm.delete('orders', { id: orderId });
     }
+
+    // ============ CATALOG METHODS ============
+    async getProducts() {
+        const sql = `
+            SELECT 
+                id,
+                name,
+                price,
+                brand_id as brandId,
+                gender_id as genderId,
+                type_id as typeId,
+                stock_quantity as stockQuantity
+            FROM products
+            ORDER BY name
+        `;
+        return this.queryAll(sql);
+    }
+
+    async getProductFullById(id) {
+        const sql = `
+            SELECT 
+                p.id,
+                p.name,
+                p.price,
+                p.brand_id as brandId,
+                p.gender_id as genderId,
+                p.type_id as typeId,
+                p.stock_quantity as stockQuantity,
+                b.type as brand,
+                g.type as gender,
+                ut.type as type
+            FROM products p
+            LEFT JOIN brands b ON p.brand_id = b.id
+            LEFT JOIN genders g ON p.gender_id = g.id
+            LEFT JOIN underwear_types ut ON p.type_id = ut.id
+            WHERE p.id = ?
+        `;
+        return this.query(sql, [id]);
+    }
+
+    async getProductSizes(productId) {
+        const sql = `
+            SELECT 
+                s.id,
+                s.type as size
+            FROM product_size ps
+            JOIN sizes s ON ps.size_id = s.id
+            WHERE ps.product_id = ?
+            ORDER BY s.id
+        `;
+        return this.queryAll(sql, [productId]);
+    }
+
+    async getProductColors(productId) {
+        const sql = `
+            SELECT 
+                c.id,
+                c.type as color
+            FROM product_color pc
+            JOIN colors c ON pc.color_id = c.id
+            WHERE pc.product_id = ?
+            ORDER BY c.id
+        `;
+        return this.queryAll(sql, [productId]);
+    }
 }
 
 // функция для создания экземпляра БД

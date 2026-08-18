@@ -14,6 +14,7 @@ const Common = require('./application/modules/common/Common.js');
 const Answer = require('./application/router/Answer.js');
 const UserManager = require('./application/modules/user/UserManager.js');
 const OrderManager = require('./application/modules/order/OrderManager.js');
+const CatalogManager = require('./application/modules/catalog/CatalogManager.js');
 const { EVENTS, TRIGGERS, SERVER_PORT, SERVER_NAME } = require('./config.js');
 
 // запуск асинхронной функции для инициализации
@@ -29,6 +30,7 @@ const { EVENTS, TRIGGERS, SERVER_PORT, SERVER_NAME } = require('./config.js');
     // создаем менеджеры
     const userManager = new UserManager({ mediator, db, common, answer, io });
     const orderManager = new OrderManager({ mediator, db, common, answer });
+    const catalogManager = new CatalogManager({ mediator, db, common, answer });
 
     // настройка CORS для всех запросов
     app.use((req, res, next) => {

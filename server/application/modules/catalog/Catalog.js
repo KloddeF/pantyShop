@@ -1,0 +1,46 @@
+class Catalog {
+    constructor({ db, common }) {
+        this.db = db;
+        this.common = common;
+    }
+
+    async getProductList() {
+        const products = await this.db.getProducts();
+        if (!products || products.length === 0) {
+            return [];
+        }
+
+        const result = [];
+        for (const productData of products) {
+            const product = await this.getProduct(productData.id);
+            if (product) {
+                result.push(product);
+            }
+        }
+        return result;
+    }
+
+    async getProduct(productId) {
+        const productData = await this.db.getProductFullById(productId);
+        if (!productData) {
+            return null;
+        }
+
+        const sizes = await this.db.getProductSizes(productId);
+        const colors = await this.db.getProductColors(productId);
+
+        return {
+            id: productData.id,
+            name: productData.name,
+            price: productData.price,
+            brand: productData.brand,
+            gender: productData.gender,
+            type: productData.type,
+            sizes: sizes.map(s => s.size),
+            colors: colors.map(c => c.color),
+            stockQuantity: productData.stockQuantity,
+        };
+    }
+}
+
+module.exports = Catalog;

@@ -14,6 +14,9 @@ class CONFIG {
         CREATE_ORDER: 'createOrder',
         GET_ORDERS_BY_USER: 'getOrdersByUser',
         CANCEL_ORDER: 'cancelOrder',
+
+        GET_PRODUCT_LIST: 'getProductList',
+        GET_PRODUCT: 'getProduct',
     }
 
     // триггеры
