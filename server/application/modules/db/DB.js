@@ -234,6 +234,126 @@ class DB {
         `;
         return this.queryAll(sql, [productId]);
     }
+
+    // ============ ADMIN METHODS ============
+    async createProduct(name, price, brandId, genderId, typeId, stockQuantity) {
+        return this.orm.insert('products', {
+            name,
+            price,
+            brand_id: brandId,
+            gender_id: genderId,
+            type_id: typeId,
+            stock_quantity: stockQuantity,
+        });
+    }
+
+    async updateProduct(productId, fields) {
+        const updateData = {};
+        if (fields.name !== undefined) updateData.name = fields.name;
+        if (fields.price !== undefined) updateData.price = fields.price;
+        if (fields.brandId !== undefined) updateData.brand_id = fields.brandId;
+        if (fields.genderId !== undefined) updateData.gender_id = fields.genderId;
+        if (fields.typeId !== undefined) updateData.type_id = fields.typeId;
+        if (fields.stockQuantity !== undefined) updateData.stock_quantity = fields.stockQuantity;
+        
+        return this.orm.update('products', { id: productId }, updateData);
+    }
+
+    async addProductSize(productId, sizeId) {
+        return this.orm.insert('product_size', {
+            product_id: productId,
+            size_id: sizeId,
+        });
+    }
+
+    async deleteProductSizes(productId) {
+        return this.orm.delete('product_size', { product_id: productId });
+    }
+
+    async addProductColor(productId, colorId) {
+        return this.orm.insert('product_color', {
+            product_id: productId,
+            color_id: colorId,
+        });
+    }
+
+    async deleteProductColors(productId) {
+        return this.orm.delete('product_color', { product_id: productId });
+    }
+
+    async getAllStatuses() {
+        return this.orm.all('statuses', null, 'id, type');
+    }
+
+    async getAllBrands() {
+        return this.orm.all('brands', null, 'id, type');
+    }
+
+    async getAllGenders() {
+        return this.orm.all('genders', null, 'id, type');
+    }
+
+    async getAllUnderwearTypes() {
+        return this.orm.all('underwear_types', null, 'id, type');
+    }
+
+    async getAllSizes() {
+        return this.orm.all('sizes', null, 'id, type');
+    }
+
+    async getAllColors() {
+        return this.orm.all('colors', null, 'id, type');
+    }
+
+    async getStatusById(id) {
+        const sql = `SELECT id, type FROM statuses WHERE id = ?`;
+        return this.query(sql, [id]);
+    }
+
+    async getSizeById(id) {
+        const sql = `SELECT id, type FROM sizes WHERE id = ?`;
+        return this.query(sql, [id]);
+    }
+
+    async getColorById(id) {
+        const sql = `SELECT id, type FROM colors WHERE id = ?`;
+        return this.query(sql, [id]);
+    }
+
+    async getBrandById(id) {
+        const sql = `SELECT id, type FROM brands WHERE id = ?`;
+        return this.query(sql, [id]);
+    }
+
+    async getGenderById(id) {
+        const sql = `SELECT id, type FROM genders WHERE id = ?`;
+        return this.query(sql, [id]);
+    }
+
+    async getTypeById(id) {
+        const sql = `SELECT id, type FROM underwear_types WHERE id = ?`;
+        return this.query(sql, [id]);
+    }
+
+    async addDictionaryItem(tableName, value) {
+        return this.orm.insert(tableName, { type: value });
+    }
+
+    async deleteDictionaryItem(tableName, id) {
+        return this.orm.delete(tableName, { id });
+    }
+
+    async checkDictionaryUsage(tableName, id) {
+        const usageMap = CONFIG.DICTIONARY_USAGE_MAP;
+        const usage = usageMap[tableName];
+        if (!usage) {
+            return false;
+        }
+
+        const sql = `SELECT id FROM ${usage.table} WHERE ${usage.field} = ? LIMIT 1`;
+        const result = await this.query(sql, [id]);
+        return result !== undefined;
+    }
 }
 
 // функция для создания экземпляра БД
