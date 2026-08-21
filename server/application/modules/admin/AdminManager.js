@@ -8,7 +8,6 @@ class AdminManager extends BaseManager {
         this.mediator.subscribe(this.EVENTS.CREATE_PRODUCT, (data) => this.eventCreateProduct(data));
         this.mediator.subscribe(this.EVENTS.CHANGE_PRODUCT, (data) => this.eventChangeProduct(data));
         this.mediator.subscribe(this.EVENTS.CHANGE_ORDER_STATUS, (data) => this.eventChangeOrderStatus(data));
-        this.mediator.subscribe(this.EVENTS.GET_DICTIONARIES, (data) => this.eventGetDictionaries(data));
         this.mediator.subscribe(this.EVENTS.ADD_DICTIONARY_DATA, (data) => this.eventAddDictionaryData(data));
         this.mediator.subscribe(this.EVENTS.DELETE_DICTIONARY_DATA, (data) => this.eventDeleteDictionaryData(data));
     }
@@ -172,22 +171,6 @@ class AdminManager extends BaseManager {
 
         await admin.changeOrderStatus(orderId, statusId);
         return this.answer.good(true);
-    }
-
-    // получение словарей
-    async eventGetDictionaries(data) {
-        const { guid } = data;
-
-        const admin = new Admin({ db: this.db, common: this.common });
-        
-        // проверяем права админа
-        const user = await admin.checkAdminRole(guid);
-        if (!user) {
-            return this.answer.bad(1004);
-        }
-
-        const dictionaries = await admin.getDictionaries();
-        return this.answer.good(dictionaries);
     }
 
     // добавление в словарь

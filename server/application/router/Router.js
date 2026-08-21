@@ -7,10 +7,10 @@ const {
     useCancelOrderHandler,
     useGetProductListHandler,
     useGetProductHandler,
+    useGetDictionariesHandler,
     useCreateProductHandler,
     useChangeProductHandler,
     useChangeOrderStatusHandler,
-    useGetDictionariesHandler,
     useAddDictionaryDataHandler,
     useDeleteDictionaryDataHandler,
 
@@ -25,12 +25,12 @@ function Router(mediator, answer, common) {
     // ============ CATALOG ROUTES ============
     router.post('/getProductList', useGetProductListHandler(mediator, answer, common));
     router.post('/getProduct', useGetProductHandler(mediator, answer, common));
+    router.post('/getDictionaries', useGetDictionariesHandler(mediator, answer, common));
 
     // ============ ADMIN ROUTES ============
     router.post('/createProduct', useCreateProductHandler(mediator, answer, common));
     router.post('/changeProduct', useChangeProductHandler(mediator, answer, common));
     router.post('/changeOrderStatus', useChangeOrderStatusHandler(mediator, answer, common));
-    router.post('/getDictionaries', useGetDictionariesHandler(mediator, answer, common));
     router.post('/addDictionaryData', useAddDictionaryDataHandler(mediator, answer, common));
     router.post('/deleteDictionaryData', useDeleteDictionaryDataHandler(mediator, answer, common));
 

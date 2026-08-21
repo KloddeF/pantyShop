@@ -41,6 +41,25 @@ class Catalog {
             stockQuantity: productData.stockQuantity,
         };
     }
+
+     // получение всех словарей
+    async getDictionaries() {
+        const statuses = await this.db.getAllStatuses();
+        const brands = await this.db.getAllBrands();
+        const genders = await this.db.getAllGenders();
+        const underwearTypes = await this.db.getAllUnderwearTypes();
+        const sizes = await this.db.getAllSizes();
+        const colors = await this.db.getAllColors();
+
+        return {
+            statuses,
+            brands,
+            genders,
+            underwearTypes,
+            sizes,
+            colors,
+        };
+    }
 }
 
 module.exports = Catalog;

@@ -7,6 +7,7 @@ class CatalogManager extends BaseManager {
         
         this.mediator.subscribe(this.EVENTS.GET_PRODUCT_LIST, (data) => this.eventGetProductList(data));
         this.mediator.subscribe(this.EVENTS.GET_PRODUCT, (data) => this.eventGetProduct(data));
+        this.mediator.subscribe(this.EVENTS.GET_DICTIONARIES, (data) => this.eventGetDictionaries(data));
     }
 
     // ============ EVENTS ============
@@ -45,6 +46,21 @@ class CatalogManager extends BaseManager {
         }
 
         return this.answer.good(product);
+    }
+
+    // получение словарей
+    async eventGetDictionaries(data) {
+        const { guid } = data;
+
+        // проверяем существование пользователя
+        const user = await this.db.getUserByGuid(guid);
+        if (!user) {
+            return this.answer.bad(1001);
+        }
+
+        const catalog = new Catalog({ db: this.db, common: this.common });
+        const dictionaries = await catalog.getDictionaries();
+        return this.answer.good(dictionaries);
     }
 }
 

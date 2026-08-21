@@ -235,6 +235,30 @@ class DB {
         return this.queryAll(sql, [productId]);
     }
 
+    async getAllStatuses() {
+        return this.orm.all('statuses', null, 'id, type');
+    }
+
+    async getAllBrands() {
+        return this.orm.all('brands', null, 'id, type');
+    }
+
+    async getAllGenders() {
+        return this.orm.all('genders', null, 'id, type');
+    }
+
+    async getAllUnderwearTypes() {
+        return this.orm.all('underwear_types', null, 'id, type');
+    }
+
+    async getAllSizes() {
+        return this.orm.all('sizes', null, 'id, type');
+    }
+
+    async getAllColors() {
+        return this.orm.all('colors', null, 'id, type');
+    }
+
     // ============ ADMIN METHODS ============
     async createProduct(name, price, brandId, genderId, typeId, stockQuantity) {
         return this.orm.insert('products', {
@@ -279,30 +303,6 @@ class DB {
 
     async deleteProductColors(productId) {
         return this.orm.delete('product_color', { product_id: productId });
-    }
-
-    async getAllStatuses() {
-        return this.orm.all('statuses', null, 'id, type');
-    }
-
-    async getAllBrands() {
-        return this.orm.all('brands', null, 'id, type');
-    }
-
-    async getAllGenders() {
-        return this.orm.all('genders', null, 'id, type');
-    }
-
-    async getAllUnderwearTypes() {
-        return this.orm.all('underwear_types', null, 'id, type');
-    }
-
-    async getAllSizes() {
-        return this.orm.all('sizes', null, 'id, type');
-    }
-
-    async getAllColors() {
-        return this.orm.all('colors', null, 'id, type');
     }
 
     async getStatusById(id) {

@@ -17,11 +17,11 @@ class CONFIG {
 
         GET_PRODUCT_LIST: 'getProductList',
         GET_PRODUCT: 'getProduct',
+        GET_DICTIONARIES: 'getDictionaries',
 
         CREATE_PRODUCT: 'createProduct',
         CHANGE_PRODUCT: 'changeProduct',
         CHANGE_ORDER_STATUS: 'changeOrderStatus',
-        GET_DICTIONARIES: 'getDictionaries',
         ADD_DICTIONARY_DATA: 'addDictionaryData',
         DELETE_DICTIONARY_DATA: 'deleteDictionaryData',
     }

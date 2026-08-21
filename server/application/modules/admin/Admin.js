@@ -93,25 +93,6 @@ class Admin {
         return this.db.updateOrderStatus(orderId, statusId);
     }
 
-    // получение всех словарей
-    async getDictionaries() {
-        const statuses = await this.db.getAllStatuses();
-        const brands = await this.db.getAllBrands();
-        const genders = await this.db.getAllGenders();
-        const underwearTypes = await this.db.getAllUnderwearTypes();
-        const sizes = await this.db.getAllSizes();
-        const colors = await this.db.getAllColors();
-
-        return {
-            statuses,
-            brands,
-            genders,
-            underwearTypes,
-            sizes,
-            colors,
-        };
-    }
-
     // добавление в словарь
     async addDictionaryData(dictionary, data) {
         const tableName = this.tableMap[dictionary];
