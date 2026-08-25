@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import { io, Socket } from 'socket.io-client';
 import CONFIG, { MEDIATOR, EMESSAGES } from '../../config';
-import { ILobby, TAnswer, TMap, TUser } from "./types";
+import { IDictionaries, IProduct, TAnswer, TUser } from "./types";
 import Mediator from '../Mediator/Mediator';
 
 const HOST = CONFIG.HOST;
@@ -52,7 +52,7 @@ class Server {
             }
         });
 
-        
+
     }
 
     private _validate(data: any) {
@@ -68,10 +68,21 @@ class Server {
         try {
             params.method = method;
             const token = this.mediator.get<string>(MEDIATOR.TRIGGERS.GET_TOKEN);
+            const guid = this.mediator.get<string>(MEDIATOR.TRIGGERS.GET_GUID);
             if (token) {
                 params.token = token;
             }
-            const response = await fetch(`${HOST}/?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`);
+            const response = await fetch(`${HOST}/${method}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token,
+                    guid,
+                    ...params,
+                }),
+            });
             const answer: TAnswer<T> = await response.json();
             if (answer.result === 'ok' && answer.data) {
                 return answer.data;
@@ -106,8 +117,16 @@ class Server {
         this.socket.emit(MEDIATOR.EVENTS.LOGOUT);
     }
 
-    dropFromLobby(guid: string, targetGuid: string): void {
-        this.socket.emit(EMESSAGES.DROP_FROM_LOBBY, { guid, targetGuid });
+    async getProductList(): Promise<IProduct[] | null> {
+        return this.request<IProduct[]>('getProductList', {});
+    }
+
+    async getProduct(productId: number): Promise<IProduct | null> {
+        return this.request<IProduct>('getProduct', { productId });
+    }
+
+    async getDictionaries(): Promise<IDictionaries | null> {
+        return this.request<IDictionaries>('getDictionaries', {});
     }
 
 }

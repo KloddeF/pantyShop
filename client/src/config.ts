@@ -16,7 +16,8 @@ export const MEDIATOR = {
         SHOW_ERROR: 'SHOW_ERROR'
     },
     TRIGGERS: {
-        GET_TOKEN: 'GET_TOKEN'
+        GET_TOKEN: 'GET_TOKEN',
+        GET_GUID: 'GET_GUID'
     }
 };
 

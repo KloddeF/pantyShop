@@ -15,35 +15,29 @@ export type TUser = {
     token: string;
 }
 
-export interface IPlayer {
-    guid: string;
-    role: string;
-    ready: boolean;
+export interface IProduct {
+    id: number;
+    name: string;
+    price: number;
+    brand: string;
+    gender: string;
+    type: string;
+    sizes: string[];
+    colors: string[];
+    stockQuantity: number;
 }
 
-export interface ILobby {
-    lobbyGuid: string;
-    lobbyName: string;
-    playersGuids: {
-        spectator: string | null,
-        peopleEconomy: string | null,
-        peopleArmy: string | null,
-        mushroomsEconomy: string | null,
-        mushroomsArmy: string | null,
-    }
-    playersIsReady: {
-        spectator: boolean,
-        peopleEconomy: boolean,
-        peopleArmy: boolean,
-        mushroomsEconomy: boolean,
-        mushroomsArmy: boolean,
-    }
-    gameState: 'waiting' | 'playing';
+export interface IDictionaryItem {
+    id: number;
+    type: string;
 }
 
-export type TMap = {
-    guid: string;
-    map: any[];
-    width: number;
-    height: number;
+export interface IDictionaries {
+    statuses: IDictionaryItem[];
+    brands: IDictionaryItem[];
+    genders: IDictionaryItem[];
+    underwearTypes: IDictionaryItem[];
+    sizes: IDictionaryItem[];
+    colors: IDictionaryItem[];
+    underwearSizes: IDictionaryItem[];
 }
