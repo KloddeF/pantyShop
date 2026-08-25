@@ -52,6 +52,16 @@ class Catalog {
         const colors = await this.db.getAllColors();
         const underwearSizes = await this.db.getAllUnderwearSizes();
 
+         // группируем underwearSizes по типам
+        const groupedUnderwearSizes = {};
+        for (const item of underwearSizes) {
+            const typeName = item.typeName;
+            if (!groupedUnderwearSizes[typeName]) {
+                groupedUnderwearSizes[typeName] = [];
+            }
+            groupedUnderwearSizes[typeName].push(item.sizeName);
+        }
+
         return {
             statuses,
             brands,
@@ -59,7 +69,7 @@ class Catalog {
             underwearTypes,
             sizes,
             colors,
-            underwearSizes,
+            underwearSizes: groupedUnderwearSizes,
         };
     }
 }
