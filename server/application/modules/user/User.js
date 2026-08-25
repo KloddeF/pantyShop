@@ -9,6 +9,7 @@ class User {
         this.guid = null;
         this.token = null;
         this.roleId = null;
+        this.deliveryAddress = null;
     }
 
     get() {
@@ -30,6 +31,7 @@ class User {
         this.guid = userData.guid;
         this.token = token;
         this.roleId = userData.roleId;
+        this.deliveryAddress = userData.deliveryAddress;
     }
 
     isLogin() {
@@ -74,6 +76,19 @@ class User {
         this.token = null;
         
         return true;
+    }
+
+    async updateAddress(deliveryAddress) {
+        if (!this.guid) {
+            return false;
+        }
+        
+        const result = await this.db.updateUserAddress(this.guid, deliveryAddress);
+        if (result) {
+            this.deliveryAddress = deliveryAddress;
+            return true;
+        }
+        return false;
     }
 }
 

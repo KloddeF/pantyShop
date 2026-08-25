@@ -44,12 +44,17 @@ class AdminManager extends BaseManager {
             return this.answer.bad(3003);
         }
 
-        // проверяем существование размеров
+        // проверяем размеры
         if (sizeIds && sizeIds.length > 0) {
             for (const sizeId of sizeIds) {
                 const size = await this.db.getSizeById(sizeId);
                 if (!size) {
                     return this.answer.bad(3004);
+                }
+                // проверяем, подходит ли размер для данного типа
+                const isValid = await this.db.checkSizeForType(typeId, sizeId);
+                if (!isValid) {
+                    return this.answer.bad(3008);
                 }
             }
         }
@@ -102,7 +107,8 @@ class AdminManager extends BaseManager {
             }
         }
 
-        // проверяем существование типа
+        // определяем тип для проверки размеров
+        let currentTypeId = typeId !== undefined ? typeId : existingProduct.typeId;
         if (typeId !== undefined) {
             const type = await this.db.getTypeById(typeId);
             if (!type) {
@@ -110,12 +116,17 @@ class AdminManager extends BaseManager {
             }
         }
 
-        // проверяем существование размеров
+        // проверяем размеры
         if (sizeIds !== undefined && sizeIds.length > 0) {
             for (const sizeId of sizeIds) {
                 const size = await this.db.getSizeById(sizeId);
                 if (!size) {
                     return this.answer.bad(3004);
+                }
+                // проверяем, подходит ли размер для данного типа
+                const isValid = await this.db.checkSizeForType(currentTypeId, sizeId);
+                if (!isValid) {
+                    return this.answer.bad(3008);
                 }
             }
         }

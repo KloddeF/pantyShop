@@ -50,6 +50,7 @@ class Catalog {
         const underwearTypes = await this.db.getAllUnderwearTypes();
         const sizes = await this.db.getAllSizes();
         const colors = await this.db.getAllColors();
+        const underwearSizes = await this.db.getAllUnderwearSizes();
 
         return {
             statuses,
@@ -58,6 +59,7 @@ class Catalog {
             underwearTypes,
             sizes,
             colors,
+            underwearSizes,
         };
     }
 }

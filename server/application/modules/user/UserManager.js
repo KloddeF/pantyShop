@@ -15,6 +15,7 @@ class UserManager extends BaseManager {
             socket.on(MESSAGES.REGISTRATION, (data) => this.socketRegistration(data, socket));
             socket.on(MESSAGES.LOGIN, (data) => this.socketLogin(data, socket));
             socket.on(MESSAGES.LOGOUT, () => this.socketLogout(socket));
+            socket.on(MESSAGES.UPDATE_USER_ADDRESS, (data) => this.socketUpdateUserAddress(data, socket));
             socket.on('disconnect', () => this.socketLogout(socket));
         });
         //mediator triggers
@@ -119,6 +120,28 @@ class UserManager extends BaseManager {
         // удаляем из всех хранилищ
         this.users.delete(user.guid);
         socket.emit(MESSAGES.LOGOUT, this.answer.good(true));
+    }
+
+    // обновление адреса доставки
+    async socketUpdateUserAddress(data = {}, socket) {
+        const { deliveryAddress } = data;
+        
+        // валидация
+        if (!deliveryAddress || typeof deliveryAddress !== 'string' || deliveryAddress.trim().length === 0) {
+            return socket.emit(MESSAGES.UPDATE_USER_ADDRESS, this.answer.bad(242));
+        }
+
+        // получаем пользователя по socketId
+        const user = this.getUserBySocketId(socket.id);
+        if (!user) {
+            return socket.emit(MESSAGES.UPDATE_USER_ADDRESS, this.answer.bad(1001));
+        }
+
+        // обновляем адрес
+        await user.updateAddress(deliveryAddress.trim());
+
+        // возвращаем успешный ответ
+        socket.emit(MESSAGES.UPDATE_USER_ADDRESS, this.answer.good(true));
     }
 
 }

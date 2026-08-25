@@ -65,6 +65,11 @@ class DB {
         return this.orm.update('users', { guid: userGuid }, { token: null });
     }
 
+    async updateUserAddress(guid, deliveryAddress) {
+        await this._ensureReady();
+        return this.orm.update('users', { guid }, { delivery_address: deliveryAddress });
+    }
+
     // ============ ORDER METHODS ============
     async getProductById(id) {
         const sql = `
@@ -259,6 +264,46 @@ class DB {
         return this.orm.all('colors', null, 'id, type');
     }
 
+    async getAllUnderwearSizes() {
+        const sql = `
+            SELECT 
+                us.id,
+                us.type_id as typeId,
+                us.size_id as sizeId,
+                ut.type as typeName,
+                s.type as sizeName
+            FROM underwear_size us
+            JOIN underwear_types ut ON us.type_id = ut.id
+            JOIN sizes s ON us.size_id = s.id
+            ORDER BY ut.type, s.type
+        `;
+        return this.queryAll(sql);
+    }
+
+    async getSizesByTypeId(typeId) {
+        const sql = `
+            SELECT 
+                s.id,
+                s.type as size
+            FROM underwear_size us
+            JOIN sizes s ON us.size_id = s.id
+            WHERE us.type_id = ?
+            ORDER BY s.id
+        `;
+        return this.queryAll(sql, [typeId]);
+    }
+
+    async checkSizeForType(typeId, sizeId) {
+        const sql = `
+            SELECT id FROM underwear_size 
+            WHERE type_id = ? AND size_id = ?
+            LIMIT 1
+        `;
+        const result = await this.query(sql, [typeId, sizeId]);
+        return result !== undefined;
+    }
+
+
     // ============ ADMIN METHODS ============
     async createProduct(name, price, brandId, genderId, typeId, stockQuantity) {
         return this.orm.insert('products', {
@@ -341,6 +386,21 @@ class DB {
 
     async deleteDictionaryItem(tableName, id) {
         return this.orm.delete(tableName, { id });
+    }
+
+    async addUnderwearSize(typeId, sizeId) {
+        return this.orm.insert('underwear_size', {
+            type_id: typeId,
+            size_id: sizeId,
+        });
+    }
+
+    async deleteUnderwearSize(id) {
+        return this.orm.delete('underwear_size', { id });
+    }
+
+    async deleteUnderwearSizesByType(typeId) {
+        return this.orm.delete('underwear_size', { type_id: typeId });
     }
 
     async checkDictionaryUsage(tableName, id) {

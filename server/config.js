@@ -36,6 +36,7 @@ class CONFIG {
         LOGIN: 'LOGIN',
         REGISTRATION: 'REGISTRATION',
         LOGOUT: 'LOGOUT',
+        UPDATE_USER_ADDRESS: 'UPDATE_USER_ADDRESS',
     }
 
     // маппинг названий словарей
