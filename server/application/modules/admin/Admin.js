@@ -20,9 +20,9 @@ class Admin {
     }
 
     // создание товара
-    async createProduct(name, price, brandId, genderId, typeId, sizeIds, colorIds, stockQuantity) {
+    async createProduct(name, price, brandId, genderId, typeId, sizeIds, colorIds, stockQuantity, description) {
         // создаем товар
-        const productId = await this.db.createProduct(name, price, brandId, genderId, typeId, stockQuantity);
+        const productId = await this.db.createProduct(name, price, brandId, genderId, typeId, stockQuantity, description);
         if (!productId) {
             return null;
         }
@@ -46,7 +46,7 @@ class Admin {
 
     // изменение товара
     async changeProduct(productId, fields) {
-        const { name, price, brandId, genderId, typeId, sizeIds, colorIds, stockQuantity } = fields;
+        const { name, price, brandId, genderId, typeId, sizeIds, colorIds, stockQuantity, description } = fields;
         
         // обновляем основные поля
         const updateData = {};
@@ -56,6 +56,7 @@ class Admin {
         if (genderId !== undefined) updateData.genderId = genderId;
         if (typeId !== undefined) updateData.typeId = typeId;
         if (stockQuantity !== undefined) updateData.stockQuantity = stockQuantity;
+        if (description !== undefined) updateData.description = description;
 
         if (Object.keys(updateData).length > 0) {
             await this.db.updateProduct(productId, updateData);
