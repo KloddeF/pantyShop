@@ -3,6 +3,7 @@ import { MediatorContext, ServerContext } from "../../App";
 import { IBasePage, PAGES } from '../PageManager';
 import { IDictionaries, IDictionaryItem, IProduct, TError } from '../../services/server/types';
 import Button from '../../components/Button/Button';
+import './Catalogue.scss'
 
 const Catalogue: React.FC<IBasePage> = (props) => {
     const server = useContext(ServerContext);
@@ -159,9 +160,23 @@ const Catalogue: React.FC<IBasePage> = (props) => {
 
             <div className="products-list">
                 {displayError && <p id='test-errors-catalogue' className='errors'>{displayError}</p>}
-                {sortedProducts.map(p => (
-                    <div key={p.id}>{p.name} — {p.price} ₽</div>
-                ))}
+                {sortedProducts.length === 0 ? (
+                    <p className="no-products">Товаров не найдено</p>
+                ) : (
+                    sortedProducts.map(p => (
+                        <div key={p.id} className="product-card">
+                            <div className="product-image">
+                                <span></span>
+                            </div>
+                            <div className="product-info">
+                                <div className="product-brand">{p.brand}</div>
+                                <div className="product-name">{p.name}</div>
+                                <div className="product-price">{p.price} ₽</div>
+                                <button className="add-to-cart">В корзину</button>
+                            </div>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     );
