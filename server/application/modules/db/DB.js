@@ -40,7 +40,19 @@ class DB {
     }
 
     async getUserByLogin(login) {
-        return this.orm.get('users', { login });
+        const sql = `
+            SELECT 
+                id,
+                login,
+                password,
+                guid,
+                token,
+                role_id as roleId,
+                delivery_address as deliveryAddress
+            FROM users
+            WHERE login = ?
+        `;
+        return this.query(sql, [login]);
     }
 
     async getUserByToken(token) {

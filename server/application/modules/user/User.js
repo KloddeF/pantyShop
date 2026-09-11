@@ -22,6 +22,7 @@ class User {
         return {
             guid: this.guid,
             token: this.token,
+            roleId: this.roleId
         };
     }
 
