@@ -13,14 +13,7 @@ class CatalogManager extends BaseManager {
     // ============ EVENTS ============
 
     // получение списка всех товаров
-    async eventGetProductList(data) {
-        const { guid } = data;
-        
-        // проверяем существование пользователя
-        const user = await this.db.getUserByGuid(guid);
-        if (!user) {
-            return this.answer.bad(1001);
-        }
+    async eventGetProductList() {
 
         const catalog = new Catalog({ db: this.db, common: this.common });
         const products = await catalog.getProductList();
@@ -30,13 +23,7 @@ class CatalogManager extends BaseManager {
 
     // получение информации о конкретном товаре
     async eventGetProduct(data) {
-        const { guid, productId } = data;
-        
-        // проверяем существование пользователя
-        const user = await this.db.getUserByGuid(guid);
-        if (!user) {
-            return this.answer.bad(1001);
-        }
+        const { productId } = data;
 
         const catalog = new Catalog({ db: this.db, common: this.common });
         const product = await catalog.getProduct(productId);
@@ -49,14 +36,7 @@ class CatalogManager extends BaseManager {
     }
 
     // получение словарей
-    async eventGetDictionaries(data) {
-        const { guid } = data;
-
-        // проверяем существование пользователя
-        const user = await this.db.getUserByGuid(guid);
-        if (!user) {
-            return this.answer.bad(1001);
-        }
+    async eventGetDictionaries() {
 
         const catalog = new Catalog({ db: this.db, common: this.common });
         const dictionaries = await catalog.getDictionaries();

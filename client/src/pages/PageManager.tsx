@@ -20,7 +20,7 @@ export interface IBasePage {
 
 const PageManager: React.FC = () => {
     const mediator = useContext(MediatorContext);
-    const [page, setPage] = useState<PAGES>(PAGES.LOGIN);
+    const [page, setPage] = useState<PAGES>(PAGES.MAIN_PAGE);
 
     const props = {
         setPage

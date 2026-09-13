@@ -40,7 +40,19 @@ class DB {
     }
 
     async getUserByLogin(login) {
-        return this.orm.get('users', { login });
+        const sql = `
+            SELECT 
+                id,
+                login,
+                password,
+                guid,
+                token,
+                role_id as roleId,
+                delivery_address as deliveryAddress
+            FROM users
+            WHERE login = ?
+        `;
+        return this.query(sql, [login]);
     }
 
     async getUserByToken(token) {
@@ -185,7 +197,8 @@ class DB {
                 brand_id as brandId,
                 gender_id as genderId,
                 type_id as typeId,
-                stock_quantity as stockQuantity
+                stock_quantity as stockQuantity,
+                description
             FROM products
             ORDER BY name
         `;
@@ -202,6 +215,7 @@ class DB {
                 p.gender_id as genderId,
                 p.type_id as typeId,
                 p.stock_quantity as stockQuantity,
+                p.description,
                 b.type as brand,
                 g.type as gender,
                 ut.type as type
@@ -305,7 +319,7 @@ class DB {
 
 
     // ============ ADMIN METHODS ============
-    async createProduct(name, price, brandId, genderId, typeId, stockQuantity) {
+    async createProduct(name, price, brandId, genderId, typeId, stockQuantity, description) {
         return this.orm.insert('products', {
             name,
             price,
@@ -313,6 +327,7 @@ class DB {
             gender_id: genderId,
             type_id: typeId,
             stock_quantity: stockQuantity,
+            description: description,
         });
     }
 
@@ -324,6 +339,7 @@ class DB {
         if (fields.genderId !== undefined) updateData.gender_id = fields.genderId;
         if (fields.typeId !== undefined) updateData.type_id = fields.typeId;
         if (fields.stockQuantity !== undefined) updateData.stock_quantity = fields.stockQuantity;
+        if (fields.description !== undefined) updateData.description = fields.description;
         
         return this.orm.update('products', { id: productId }, updateData);
     }
