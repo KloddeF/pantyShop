@@ -1,6 +1,6 @@
 import { TUser } from "../server/types";
 import Mediator from '../Mediator/Mediator';
-import { EMESSAGES, MEDIATOR } from "../../config";
+import { MEDIATOR } from "../../config";
 
 const TOKEN = 'token';
 
@@ -21,7 +21,7 @@ class Store {
 
         this.mediator.set(MEDIATOR.TRIGGERS.GET_TOKEN, () => this.getToken());
         this.mediator.set(MEDIATOR.TRIGGERS.GET_GUID, () => this.getGuid());
-        this.mediator.set(EMESSAGES.GET_USER, () => this.getUser())
+        this.mediator.set(MEDIATOR.TRIGGERS.GET_USER, () => this.getUser())
     }
 
     handleLogin(data: TUser): void {

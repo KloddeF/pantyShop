@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-const useChecRegistration = () => {
+const useCheckRegistration = () => {
     const [isFormValid, setIsFormValid] = useState(false);
     const [clientError, setClientError] = useState<string>('');
 
@@ -46,4 +46,4 @@ const useChecRegistration = () => {
     };
 }
 
-export default useChecRegistration;
+export default useCheckRegistration;

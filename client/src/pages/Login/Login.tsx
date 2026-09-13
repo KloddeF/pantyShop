@@ -4,7 +4,7 @@ import { IBasePage, PAGES } from '../PageManager';
 import { TError } from '../../services/server/types';
 import Button from '../../components/Button/Button';
 import useCheckLogin from './hooks/useCheckLogin';
-import './Login.scss'
+import './Login.scss';
 
 const Login: React.FC<IBasePage> = (props) => {
     const { setPage } = props;

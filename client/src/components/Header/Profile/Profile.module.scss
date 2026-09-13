@@ -1,0 +1,54 @@
+// LoginPopup.module.scss
+
+.popup {
+  position: fixed;
+  top: 118px;              
+  right: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px 28px 28px;
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15),
+              0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 1;
+  animation: slideInTop 0.2s;
+  margin: 0;
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 13px;
+  text-align: center;
+  margin: 0;
+  padding: 6px 8px;
+  background: #fde8e8;
+  border-radius: 4px;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .popup {
+    top: 70px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+    max-width: none;
+    padding: 20px 20px 24px;
+  }
+}

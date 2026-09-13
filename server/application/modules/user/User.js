@@ -20,6 +20,7 @@ class User {
 
     getSelf() {
         return {
+            login: this.login,
             guid: this.guid,
             token: this.token,
         };

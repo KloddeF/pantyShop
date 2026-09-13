@@ -14,22 +14,17 @@ export const MediatorContext = createContext<Mediator>(null!);
 export const ServerContext = createContext<Server>(null!);
 
 const App: React.FC = () => {
-  // mediator
   const mediator = useMediator();
   const store = new Store(mediator);
   const server = new Server(mediator);
-
-  server.check('ВАСИЛИЙ', 'Я на такое не подписывался!');
-
+  
   return (
     <MediatorContext value={mediator}>
       <ServerContext.Provider value={server}>
         <div className="App">
-          <div className='app'>
             <Header />
             <PageManager />
             <Footer />
-          </div>
         </div>
       </ServerContext.Provider>
     </MediatorContext>
