@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { MediatorContext, ServerContext } from "../../App";
 import { IBasePage, PAGES } from '../PageManager';
 import { IDictionaries, IDictionaryItem, IProduct, TError } from '../../services/server/types';
-import Button from '../../components/Button/Button';
+import ProductMenu from '../ProductMenu/ProductMenu';
 import './Catalogue.scss'
 
 const Catalogue: React.FC<IBasePage> = (props) => {
@@ -11,6 +11,7 @@ const Catalogue: React.FC<IBasePage> = (props) => {
     const [products, setProducts] = useState<IProduct[]>([]);
     const [dictionaries, setDictionaries] = useState<IDictionaries | null>(null);
     const [sortBy, setSortBy] = useState<string>('newest');
+    const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
     const [error, setError] = useState<TError | null>(null);
     const displayError = error?.message;
 
@@ -167,6 +168,12 @@ const Catalogue: React.FC<IBasePage> = (props) => {
                         <div key={p.id} className="product-card">
                             <div className="product-image">
                                 <span></span>
+                                <button
+                                    className="product-more"
+                                    onClick={() => setSelectedProduct(p)}
+                                >
+                                    Подробнее
+                                </button>
                             </div>
                             <div className="product-info">
                                 <div className="product-brand">{p.brand}</div>
@@ -178,6 +185,12 @@ const Catalogue: React.FC<IBasePage> = (props) => {
                     ))
                 )}
             </div>
+            {selectedProduct && (
+                <ProductMenu
+                    product={selectedProduct}
+                    onClose={() => setSelectedProduct(null)}
+                />
+            )}
         </div>
     );
 }

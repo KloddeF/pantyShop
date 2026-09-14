@@ -27,6 +27,7 @@ export interface IProduct {
     sizes: string[];
     colors: string[];
     stockQuantity: number;
+    description: string;
 }
 
 export interface IDictionaryItem {
