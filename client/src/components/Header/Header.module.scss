@@ -182,29 +182,6 @@
     box-shadow: 0 0 0 3px rgba(36, 36, 40, 0.2);
 }
 
-.search-btn {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0 20px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.search-btn:hover {
-    background-color: #1b5e20;
-    transform: translateY(-1px);
-}
-
-.search-btn:active {
-    transform: translateY(1px);
-}
-
 .promo-banner {
     background: linear-gradient(135deg, var(--secondary), #ff9800);
     color: white;

@@ -12,24 +12,25 @@ const Account: React.FC<{}> = () => {
     const { GET_USER } = mediator.getTriggerTypes();   
     const accountInfoClickHandler = () => mediator.call(SET_TO_ACCOUNT_INFO);
 
-
     const logoutClickHandler = () => server.logout();
 
     useEffect(() => setLogin(mediator.get<TUser>(GET_USER)!.login));
 
     return (
         <div className={styles.content}>
-            <p>{}</p>
+            <p className={styles.p}>Добро пожаловать, {login}!</p>
+            <div>
             <Button
                 onClick={accountInfoClickHandler}
                 text='Изменить информацию об аккаунте'
-                className='button-register'
+                className={styles.button}
             />
             <Button
                 onClick={logoutClickHandler}
                 text='Выход'
-                className='button-register'
+                className={styles.button}
             />
+            </div>
         </div>
     );
 };

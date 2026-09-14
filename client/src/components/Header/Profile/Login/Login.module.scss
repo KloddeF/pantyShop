@@ -1,26 +1,56 @@
-
-.closeButton {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: none;
-  border: none;
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  color: #999;
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: all 0.15s;
-
-  &:hover {
-    color: #000;
-    background: rgba(0, 0, 0, 0.05);
-  }
+:root {
+    --primary: #1a1919;
 }
 
 .content {
   display: flex;
   flex-direction: column;
+  align-items: center; 
   gap: 14px;
+}
+
+.input {
+    flex: 1;
+    padding: 8px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    margin: 4px;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(36, 36, 40, 0.2);
+}
+
+.button {
+    padding: 12px 0;
+    background: #7c3af7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: auto;
+    letter-spacing: 0.3px;
+    width: 70%;
+}
+
+.button:hover {
+    background: #6116eb;
+    transform: scale(1.02);
+}
+
+.button:active {
+    transform: scale(0.98);
+}
+
+.p {
+  color: var(--primary);
+  font-weight: 600;
 }

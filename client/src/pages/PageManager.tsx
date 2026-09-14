@@ -1,15 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { MediatorContext } from '../App';
-import Registration from './Registration/Registration';
-import Login from './Login/Login';
 import Catalogue from './Catalogue/Catalogue';
 
 import { TError } from '../services/server/types';
 import MainPage from './MainPage/MainPage';
 
 export enum PAGES {
-    LOGIN,
-    REGISTRATION,
     MAIN_PAGE,
     CATALOGUE
 }
@@ -33,8 +29,6 @@ const PageManager: React.FC = () => {
 
     return (
         <>
-            {page === PAGES.REGISTRATION && <Registration {...props} />}
-            {page === PAGES.LOGIN && <Login {...props} />}
             {page === PAGES.MAIN_PAGE && <MainPage {...props} />}
             {page === PAGES.CATALOGUE && <Catalogue {...props} />}
         </>

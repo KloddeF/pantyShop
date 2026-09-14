@@ -10,10 +10,11 @@ export type TAnswer<T> = {
 }
 
 export type TUser = {
-    id: number;
     guid: string;
     login: string;
     token: string;
+    roleId: number;
+    deliveryAddress: string;
 }
 
 export interface IProduct {

@@ -2,7 +2,7 @@ import React, { useRef, useState, useContext } from 'react';
 import { MediatorContext, ServerContext } from "../../../../App";
 import { TError } from '../../../../services/server/types';
 import Button from '../../../Button/Button';
-import useCheckRegistration from '../../../../pages/Registration/hooks/useCheckRegistration';
+import useCheckRegistration from './hooks/useCheckRegistration';
 import styles from './Registration.module.scss';
 
 const Registration: React.FC<{}> = () => {
@@ -36,38 +36,38 @@ const Registration: React.FC<{}> = () => {
 
     const loginButtonHandler = () => mediator.call(SET_TO_LOGIN);
 
-    return (<div className='registration'>
+    return (<div className={styles.content}>
         <div className='registration-wrapper'>
-            <p className='registration-label-log'>логин</p>
+            <p className={styles.p}>Логин</p>
             <input
                 ref={loginRef}
                 type="text"
-                placeholder="ваш логин"
+                placeholder="Ваш логин"
                 onChange={hideErrorOnInput}
                 onKeyUp={() => checkFilled(loginRef.current.value, passwordRef.current.value, confirmPasswordRef.current.value)}
-                className='input-loginReg'
+                className={styles.input}
                 id='test-input-loginReg'
                 autoComplete='off'
             />
-            <p className='registration-label-pass'>пароль</p>
+            <p className={styles.p}>Пароль</p>
             <input
                 ref={passwordRef}
                 type="password"
-                placeholder="ваш пароль"
+                placeholder="Ваш пароль"
                 onChange={hideErrorOnInput}
                 onKeyUp={() => checkFilled(loginRef.current.value, passwordRef.current.value, confirmPasswordRef.current.value)}
-                className='input-passwordReg'
+                className={styles.input}
                 id='test-input-passwordReg'
                 autoComplete='off'
             />
-            <p className='registration-label-certpass'>подтверждение пароля</p>
+            <p className={styles.p}>Подтверждение пароля</p>
             <input
                 ref={confirmPasswordRef}
                 type="password"
-                placeholder="повторите ваш пароль"
+                placeholder="Повторите ваш пароль"
                 onChange={hideErrorOnInput}
                 onKeyUp={() => checkFilled(loginRef.current.value, passwordRef.current.value, confirmPasswordRef.current.value)}
-                className='input-certpasswordReg'
+                className={styles.input}
                 id='test-input-certpasswordReg'
                 autoComplete='off'
             />
@@ -77,15 +77,15 @@ const Registration: React.FC<{}> = () => {
             <div className='registration-buttons'>
                 <Button
                     onClick={registrationClickHandler}
-                    text='зарегистрироваться'
+                    text='Зарегистрироваться'
                     isDisabled={!isFormValid}
-                    className='registration-button'
+                    className={styles.button}
                     id='test-registration-button'
                 />
                 <Button
                     onClick={loginButtonHandler}
-                    text='есть аккаунт?'
-                    className='haveAccount-Button'
+                    text='Есть аккаунт?'
+                    className={styles.button}
                     id='test-haveAccount-Button'
                 />
             </div>

@@ -2,13 +2,13 @@ import React, { useEffect, useRef, useState, useContext } from 'react';
 import { MediatorContext, ServerContext } from "../../../../App";
 import { TError } from '../../../../services/server/types';
 import Button from '../../../Button/Button';
-import useCheckLogin from '../../../../pages/Login/hooks/useCheckLogin';
+import useCheckLogin from './hooks/useCheckLogin';
 import styles from './Login.module.scss';
 
 const Login: React.FC<{}> = () => {
     const server = useContext(ServerContext);
     const mediator = useContext(MediatorContext);
-    
+
     const loginRef = useRef<HTMLInputElement>(null!);
     const passwordRef = useRef<HTMLInputElement>(null!);
 
@@ -37,26 +37,26 @@ const Login: React.FC<{}> = () => {
     return (
         <div className={styles.content}>
             <div className="input-group login-group">
-                <p className='p-login'>логин</p>
+                <p className={styles.p}>Логин</p>
                 <input
                     ref={loginRef}
                     type="text"
                     placeholder="Ваш логин"
                     onChange={hideErrorOnInput}
-                    className='input-login'
+                    className={styles.input}
                     id='test-input-login'
                     autoComplete='off'
                 />
             </div>
 
             <div className="input-group password-group">
-                <p className='p-password'>пароль</p>
+                <p className={styles.p}>Пароль</p>
                 <input
                     ref={passwordRef}
                     type="password"
-                    placeholder="ваш пароль"
+                    placeholder="Ваш пароль"
                     onChange={hideErrorOnInput}
-                    className='input-password'
+                    className={styles.input}
                     id='test-input-password'
                     autoComplete='off'
                     onKeyDown={(e) => {
@@ -75,14 +75,14 @@ const Login: React.FC<{}> = () => {
 
             <Button
                 onClick={loginClickHandler}
-                text='войти'
+                text='Войти'
                 isDisabled={!isFormValid}
-                className='button-login'
+                className={styles.button}
             />
             <Button
                 onClick={registerClickHandler}
                 text='Создать аккаунт'
-                className='button-register'
+                className={styles.button}
             />
         </div>
     );

@@ -78,7 +78,6 @@ class DB {
     }
 
     async updateUserAddress(guid, deliveryAddress) {
-        await this._ensureReady();
         return this.orm.update('users', { guid }, { delivery_address: deliveryAddress });
     }
 

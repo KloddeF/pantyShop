@@ -23,7 +23,8 @@ class User {
             login: this.login,
             guid: this.guid,
             token: this.token,
-            roleId: this.roleId
+            roleId: this.roleId,
+            deliveryAddress: this.deliveryAddress
         };
     }
 

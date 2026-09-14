@@ -4,7 +4,8 @@ export enum EMESSAGES {
     GET_LOBBIES = 'GET_LOBBIES',
     DROP_FROM_LOBBY = 'DROP_FROM_LOBBY',
     GAME_STARTED = 'GAME_STARTED',
-    GET_CURRENT_LOBBY = 'GET_CURRENT_LOBBY'
+    GET_CURRENT_LOBBY = 'GET_CURRENT_LOBBY',
+    UPDATE_USER_ADDRESS = 'UPDATE_USER_ADDRESS'
 };
 
 export const MEDIATOR = {
@@ -17,7 +18,8 @@ export const MEDIATOR = {
         SET_TO_REGISTRATION: 'SET_TO_REGISTRATION',
         SET_TO_LOGIN: 'SET_TO_LOGIN',
         SET_TO_ACCOUNT: 'SET_TO_ACCOUNT',
-        SET_TO_ACCOUNT_INFO: 'SET_TO_ACCOUNT_INFO'
+        SET_TO_ACCOUNT_INFO: 'SET_TO_ACCOUNT_INFO',
+        UPDATE_USER_ADDRESS: 'UPDATE_USER_ADDRESS'
     },
     TRIGGERS: {
         GET_TOKEN: 'GET_TOKEN',
@@ -35,16 +37,6 @@ export type TWINDOW = {
 
 const CONFIG = {
     HOST: 'http://localhost:3001', // Адрес сервера
-
-    // игровое окно, видимое пользователю
-    WINDOW: {
-        LEFT: 0,
-        TOP: 0,
-        HEIGHT: 800,
-        WIDTH: 800,
-    },
-    WIDTH: 100,
-    HEIGHT: 100
 };
 
 export default CONFIG;

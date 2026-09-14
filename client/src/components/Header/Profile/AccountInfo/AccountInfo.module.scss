@@ -1,4 +1,3 @@
-
 .button {
     padding: 12px 0;
     background: #7c3af7;
@@ -22,6 +21,23 @@
 
 .button:active {
     transform: scale(0.98);
+}
+
+.input {
+    flex: 1;
+    padding: 8px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    margin: 4px;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(36, 36, 40, 0.2);
 }
 
 .p {

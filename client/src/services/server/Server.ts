@@ -19,14 +19,6 @@ class Server {
         this.socket.on('connect', () => console.log('КОНнЕНКШОН!!! id:', this.socket.id));
         this.socket.on("disconnect", () => console.log('дисконнект. id:', this.socket.id));
 
-        this.socket.on(EMESSAGES.CHECK, (data: string) => {
-            this.mediator.call(EMESSAGES.CHECK, data);
-        });
-
-        this.socket.on(EMESSAGES.SEND_TO_ALL, (data: { name: string, text: string }) => {
-            this.mediator.call(EMESSAGES.SEND_TO_ALL, data);
-        });
-
         this.socket.on(MEDIATOR.EVENTS.LOGIN, (data: TAnswer<TUser>) => {
             const result = this._validate(data);
             if (result) {
@@ -52,6 +44,13 @@ class Server {
             }
         });
 
+        this.socket.on(MEDIATOR.EVENTS.UPDATE_USER_ADDRESS, (data: TAnswer<Boolean>) => {
+            const result = this._validate(data);
+            if (result) {
+                const { UPDATE_USER_ADDRESS } = this.mediator.getEventTypes();
+                this.mediator.call(UPDATE_USER_ADDRESS, result);
+            }
+        });
 
     }
 
@@ -99,10 +98,6 @@ class Server {
         }
     }
 
-    check(name: string, text: string): void {
-        this.socket.emit(EMESSAGES.CHECK, { name, text });
-    }
-
     login(login: string, password: string): void {
         const passwordHash = md5(`${login}${password}`);
         this.socket.emit(MEDIATOR.EVENTS.LOGIN, { login, passwordHash });
@@ -111,6 +106,10 @@ class Server {
     registration(login: string, password: string): void {
         const passwordHash = md5(`${login}${password}`);
         this.socket.emit(MEDIATOR.EVENTS.REGISTRATION, { login, passwordHash });
+    }
+
+    updateUserAddress(deliveryAddress: string): void {
+        this.socket.emit(MEDIATOR.EVENTS.UPDATE_USER_ADDRESS, { deliveryAddress });
     }
 
     logout(): void {
