@@ -2,12 +2,14 @@ import React, { useRef, useContext } from 'react';
 import { MediatorContext, ServerContext } from "../../App";
 import styles from './Header.module.scss';
 import Profile from './Profile/Profile';
+import Cart from './Cart/Cart';
 
 function Header() {
 
     const mediator = useContext(MediatorContext);
-    const { PROFILE_BUTTON } = mediator.getEventTypes();
+    const { PROFILE_BUTTON, CART_BUTTON } = mediator.getEventTypes();
     const profileClickHandler = () => mediator.call(PROFILE_BUTTON);
+    const cartClickHandler = () => mediator.call(CART_BUTTON);
 
     return (
         <div>
@@ -31,7 +33,7 @@ function Header() {
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
                         </button>
-                        <button className={styles.IconButton}>
+                        <button className={styles.IconButton} onClick={cartClickHandler}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="8" cy="21" r="1"></circle>
                                 <circle cx="19" cy="21" r="1"></circle>
@@ -42,11 +44,8 @@ function Header() {
                     </div>
                 </div>
                 <Profile/>
+                <Cart/>
             </header>
-
-            <script>
-
-            </script>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { MouseEventHandler, useContext, useEffect, useMemo, useState } from 'react';
 import { MediatorContext, ServerContext } from "../../App";
 import { IBasePage, PAGES } from '../PageManager';
 import { IDictionaries, IDictionaryItem, IProduct, TError } from '../../services/server/types';
@@ -13,6 +13,7 @@ const Catalogue: React.FC<IBasePage> = (props) => {
     const [sortBy, setSortBy] = useState<string>('newest');
     const [selectedProduct, setSelectedProduct] = useState<IProduct | null>(null);
     const [error, setError] = useState<TError | null>(null);
+    const { ADD_PRODUCT_TO_CART } = mediator.getEventTypes();
     const displayError = error?.message;
 
     const [filters, setFilters] = useState({
@@ -41,6 +42,8 @@ const Catalogue: React.FC<IBasePage> = (props) => {
         const item = dict.find(d => d.id === id);
         return item ? item.type : '';
     };
+
+    const addProductToCart = (p: IProduct) => mediator.call(ADD_PRODUCT_TO_CART, p);
 
     const filteredProducts = useMemo(() => {
         if (!dictionaries) return [];
@@ -179,7 +182,10 @@ const Catalogue: React.FC<IBasePage> = (props) => {
                                 <div className="product-brand">{p.brand}</div>
                                 <div className="product-name">{p.name}</div>
                                 <div className="product-price">{p.price} ₽</div>
-                                <button className="add-to-cart">В корзину</button>
+                                <button
+                                    className="add-to-cart"
+                                    onClick={() => addProductToCart(p)}
+                                >В корзину</button>
                             </div>
                         </div>
                     ))

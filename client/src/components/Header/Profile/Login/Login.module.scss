@@ -1,5 +1,6 @@
 :root {
     --primary: #1a1919;
+    --red: #B22222; 
 }
 
 .content {
@@ -53,4 +54,9 @@
 .p {
   color: var(--primary);
   font-weight: 600;
+}
+
+.error {
+  color: var(--red);
+  font-weight: 500;
 }
