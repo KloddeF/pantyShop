@@ -111,6 +111,8 @@ type Order = {
   products: {              - товары в заказе
     productId: number;
     quantity: number;
+    size: number;
+    color: number;
   };
 }
 ```
@@ -344,7 +346,9 @@ Answer<{
   guid: string;                  - GUID пользователя
   products: {                    - массив товаров
     productId: number;
-    quantity: number;          
+    quantity: number;
+    size: number;
+    color: number;          
   };
 }
 ```

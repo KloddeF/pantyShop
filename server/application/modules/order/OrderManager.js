@@ -18,7 +18,7 @@ class OrderManager extends BaseManager {
         
         // проверяем каждый товар в корзине
         for (const item of products) {
-            if (!item.productId || !item.quantity || item.quantity <= 0) {
+            if (!item.productId || !item.quantity || item.quantity <= 0 || !item.size || !item.color) {
                 return this.answer.bad(242);
             }
         }
@@ -53,7 +53,7 @@ class OrderManager extends BaseManager {
 
         // добавляем товары в заказ и обновляем склад
         for (const item of products) {
-            const result = await this.db.addOrderProduct(orderId, item.productId, item.quantity);
+            const result = await this.db.addOrderProduct(orderId, item.productId, item.quantity, item.size, item.color);
             await this.db.updateProductStock(item.productId, -item.quantity);
         }
 

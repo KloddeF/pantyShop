@@ -130,6 +130,8 @@ class DB {
             SELECT 
                 op.product_id as productId,
                 op.quantity,
+                op.size,
+                op.color,
                 p.name,
                 p.price,
                 p.stock_quantity as stockQuantity,
@@ -154,11 +156,13 @@ class DB {
         });
     }
 
-    async addOrderProduct(orderId, productId, quantity) {
+    async addOrderProduct(orderId, productId, quantity, size, color) {
         return this.orm.insert('order_product', {
             order_id: orderId,
             product_id: productId,
             quantity: quantity,
+            size: size,
+            color: color,
         });
     }
 
