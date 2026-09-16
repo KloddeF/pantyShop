@@ -1,6 +1,6 @@
-import React, { MouseEventHandler, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { MediatorContext, ServerContext } from "../../App";
-import { IBasePage, PAGES } from '../PageManager';
+import { IBasePage } from '../PageManager';
 import { IDictionaries, IDictionaryItem, IProduct, TError } from '../../services/server/types';
 import ProductMenu from '../ProductMenu/ProductMenu';
 import './Catalogue.scss'
@@ -182,10 +182,6 @@ const Catalogue: React.FC<IBasePage> = (props) => {
                                 <div className="product-brand">{p.brand}</div>
                                 <div className="product-name">{p.name}</div>
                                 <div className="product-price">{p.price} ₽</div>
-                                <button
-                                    className="add-to-cart"
-                                    onClick={() => addProductToCart(p)}
-                                >В корзину</button>
                             </div>
                         </div>
                     ))

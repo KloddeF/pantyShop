@@ -3,10 +3,8 @@ import { MediatorContext } from '../App';
 import Catalogue from './Catalogue/Catalogue';
 
 import { TError } from '../services/server/types';
-import MainPage from './MainPage/MainPage';
 
 export enum PAGES {
-    MAIN_PAGE,
     CATALOGUE
 }
 
@@ -16,7 +14,7 @@ export interface IBasePage {
 
 const PageManager: React.FC = () => {
     const mediator = useContext(MediatorContext);
-    const [page, setPage] = useState<PAGES>(PAGES.MAIN_PAGE);
+    const [page, setPage] = useState<PAGES>(PAGES.CATALOGUE);
 
     const props = {
         setPage
@@ -29,7 +27,6 @@ const PageManager: React.FC = () => {
 
     return (
         <>
-            {page === PAGES.MAIN_PAGE && <MainPage {...props} />}
             {page === PAGES.CATALOGUE && <Catalogue {...props} />}
         </>
     );
