@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { MediatorContext, ServerContext } from "../../App";
 import { IProduct } from '../../services/server/types';
 import './ProductMenu.scss';
 
@@ -9,14 +10,19 @@ interface ProductModalProps {
 
 const ProductMenu: React.FC<ProductModalProps> = (props) => {
     const { product, onClose } = props;
+    const mediator = useContext(MediatorContext);
     const [selectedSize, setSelectedSize] = useState<string>('');
     const [selectedColor, setSelectedColor] = useState<string>('');
-    
+    const { ADD_PRODUCT_TO_CART } = mediator.getEventTypes();
+
     const closeClickHandler = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget) {
             onClose();
         }
     };
+
+    const addProductToCart = (p: IProduct) => mediator.call(ADD_PRODUCT_TO_CART, p);
+
 
     return (
         <div className="product-menu" onClick={closeClickHandler}>
@@ -65,7 +71,10 @@ const ProductMenu: React.FC<ProductModalProps> = (props) => {
 
                     <div className="menu-footer">
                         <div className="menu-price">{product.price} ₽</div>
-                        <button className="add-to-cart">В корзину</button>
+                        <button
+                            className="add-to-cart"
+                            onClick={() => addProductToCart(product)}
+                        >В корзину</button>
                     </div>
                 </div>
             </div>

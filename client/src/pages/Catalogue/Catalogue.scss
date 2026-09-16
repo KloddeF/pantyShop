@@ -143,29 +143,6 @@
     letter-spacing: -0.5px;
 }
 
-.add-to-cart {
-    padding: 12px 0;
-    background: #7c3af7;
-    color: white;
-    border: none;
-    border-radius: 16px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: auto;
-    letter-spacing: 0.3px;
-}
-
-.add-to-cart:hover {
-    background: #6116eb;
-    transform: scale(1.02);
-}
-
-.add-to-cart:active {
-    transform: scale(0.98);
-}
-
 .no-products {
     grid-column: 1 / -1;
     text-align: center;
