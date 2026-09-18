@@ -16,7 +16,7 @@ class AdminManager extends BaseManager {
 
     // создание товара
     async eventCreateProduct(data) {
-        const { guid, name, price, brandId, genderId, typeId, sizeIds, colorIds, stockQuantity, description } = data;
+        const { guid, name, price, brandId, genderId, typeId, sizeIds, colorIds, stockQuantity, description, image } = data;
 
         const admin = new Admin({ db: this.db, common: this.common });
         
@@ -69,13 +69,13 @@ class AdminManager extends BaseManager {
             }
         }
 
-        await admin.createProduct(name, price, brandId, genderId, typeId, sizeIds || [], colorIds || [], stockQuantity, description);
+        await admin.createProduct(name, price, brandId, genderId, typeId, sizeIds || [], colorIds || [], stockQuantity, description, image);
         return this.answer.good(true);
     }
 
     // изменение товара
     async eventChangeProduct(data) {
-        const { guid, productId, name, price, brandId, genderId, typeId, sizeIds, colorIds, stockQuantity, description } = data;
+        const { guid, productId, name, price, brandId, genderId, typeId, sizeIds, colorIds, stockQuantity, description, image } = data;
 
         const admin = new Admin({ db: this.db, common: this.common });
         
@@ -152,6 +152,7 @@ class AdminManager extends BaseManager {
         if (colorIds !== undefined) fields.colorIds = colorIds;
         if (stockQuantity !== undefined) fields.stockQuantity = stockQuantity;
         if (description !== undefined) fields.description = description;
+        if (image !== undefined) fields.image = image;
 
         await admin.changeProduct(productId, fields);
         return this.answer.good(true);

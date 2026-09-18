@@ -97,6 +97,7 @@ type Product = {
   colorIds: number[];      - массив ID цветов
   stockQuantity: number;   - количество на складе
   description: string;     - описание
+  image: string;           - картинка              
 }
 ```
 
@@ -437,6 +438,7 @@ Answer<true>
   colorIds: number[];       - массив ID цветов
   stockQuantity: number;    - количество на складе
   description: string;      - описание
+  image: string;            - картинка
 }
 ```
 
@@ -477,6 +479,7 @@ Answer<true>
   colorIds?: number[];       - новый массив ID цветов (опционально)
   stockQuantity?: number;    - новое количество на складе (опционально)
   description?: string;      - новое описание (опционально)
+  image?: string;            - новая картинка (опционально)
 }
 ```
 
