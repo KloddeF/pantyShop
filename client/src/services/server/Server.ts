@@ -166,7 +166,7 @@ class Server {
         description: string,
         image: string
     }) {
-        return this.request<Boolean>('createProduct', { props });
+        return this.request<Boolean>('createProduct', { ...props });
     }
 
     async changeProduct(props: {
@@ -182,28 +182,28 @@ class Server {
         description?: string,
         image?: string
     }) {
-        return this.request<Boolean>('changeProduct', { props });
+        return this.request<Boolean>('changeProduct', { ...props });
     }
 
     async changeOrderStatus(props: {
         orderId: number,
         statusId: number,
     }) {
-        return this.request<Boolean>('changeOrderStatus', { props });
+        return this.request<Boolean>('changeOrderStatus', { ...props });
     }
 
     async addDictionaryData(props: {
         dictionary: string
         data: any
     }) {
-        return this.request<Boolean>('addDictionaryData', { props });
+        return this.request<Boolean>('addDictionaryData', { ...props });
     }
 
     async deleteDictionaryData(props: {
         dictionary: string,
         dataId: number,
     }) {
-        return this.request<Boolean>('deleteDictionaryData', { props });
+        return this.request<Boolean>('deleteDictionaryData', { ...props });
     }
 }
 
