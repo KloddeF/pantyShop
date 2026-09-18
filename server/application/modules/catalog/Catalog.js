@@ -40,6 +40,7 @@ class Catalog {
             colors: colors.map(c => c.color),
             stockQuantity: productData.stockQuantity,
             description: productData.description,
+            image: productData.image,
         };
     }
 

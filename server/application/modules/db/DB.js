@@ -91,7 +91,8 @@ class DB {
                 brand_id as brandId,
                 gender_id as genderId,
                 type_id as typeId,
-                stock_quantity as stockQuantity
+                stock_quantity as stockQuantity,
+                image
             FROM products
             WHERE id = ?
         `;
@@ -201,7 +202,8 @@ class DB {
                 gender_id as genderId,
                 type_id as typeId,
                 stock_quantity as stockQuantity,
-                description
+                description,
+                image
             FROM products
             ORDER BY name
         `;
@@ -219,6 +221,7 @@ class DB {
                 p.type_id as typeId,
                 p.stock_quantity as stockQuantity,
                 p.description,
+                p.image,
                 b.type as brand,
                 g.type as gender,
                 ut.type as type
@@ -322,7 +325,7 @@ class DB {
 
 
     // ============ ADMIN METHODS ============
-    async createProduct(name, price, brandId, genderId, typeId, stockQuantity, description) {
+    async createProduct(name, price, brandId, genderId, typeId, stockQuantity, description, image) {
         return this.orm.insert('products', {
             name,
             price,
@@ -331,6 +334,7 @@ class DB {
             type_id: typeId,
             stock_quantity: stockQuantity,
             description: description,
+            image: image,
         });
     }
 
@@ -343,6 +347,7 @@ class DB {
         if (fields.typeId !== undefined) updateData.type_id = fields.typeId;
         if (fields.stockQuantity !== undefined) updateData.stock_quantity = fields.stockQuantity;
         if (fields.description !== undefined) updateData.description = fields.description;
+        if (fields.image !== undefined) updateData.image = fields.image;
         
         return this.orm.update('products', { id: productId }, updateData);
     }
