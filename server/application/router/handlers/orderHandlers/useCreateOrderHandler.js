@@ -3,7 +3,7 @@ module.exports = (mediator, answer, common) => {
 
     return async (req, res) => {
         const { guid, products } = req.body;
-        
+
         if (!common.checkGuid(guid)) {
             return res.json(answer.bad(242));
         }

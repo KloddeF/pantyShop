@@ -18,10 +18,12 @@ class OrderManager extends BaseManager {
         
         // проверяем каждый товар в корзине
         for (const item of products) {
-            if (!item.productId || !item.quantity || item.quantity <= 0 || !item.size || !item.color) {
+            if (!item.id || !item.size || !item.color) {
+                console.log(item.id, item.size, item.color)
                 return this.answer.bad(242);
             }
         }
+
 
         // проверяем существование пользователя
         const user = await this.db.getUserByGuid(guid);
@@ -36,11 +38,11 @@ class OrderManager extends BaseManager {
 
         // проверяем наличие товаров на складе
         for (const item of products) {
-            const product = await this.db.getProductById(item.productId);
+            const product = await this.db.getProductById(item.id);
             if (!product) {
                 return this.answer.bad(2001);
             }
-            if (product.stockQuantity < item.quantity) {
+            if (product.stockQuantity < 1) {
                 return this.answer.bad(2002);
             }
         }
@@ -53,8 +55,8 @@ class OrderManager extends BaseManager {
 
         // добавляем товары в заказ и обновляем склад
         for (const item of products) {
-            const result = await this.db.addOrderProduct(orderId, item.productId, item.quantity, item.size, item.color);
-            await this.db.updateProductStock(item.productId, -item.quantity);
+            const result = await this.db.addOrderProduct(orderId, item.id, 1, item.size, item.color);
+            await this.db.updateProductStock(item.id, -1);
         }
 
         return this.answer.good(true);

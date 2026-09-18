@@ -43,8 +43,6 @@ const Catalogue: React.FC<IBasePage> = (props) => {
         return item ? item.type : '';
     };
 
-    const addProductToCart = (p: IProduct) => mediator.call(ADD_PRODUCT_TO_CART, p);
-
     const filteredProducts = useMemo(() => {
         if (!dictionaries) return [];
 

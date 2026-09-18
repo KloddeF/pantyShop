@@ -9,7 +9,7 @@ const Product: React.FC<{ p: IProduct }> = ({ p }) => {
     const delButtonHandler = () => mediator.call(DEL_PRODUCT_FROM_CART, p);
 
     return (
-        <div className={styles.popup}>
+        <div className={styles.divProduct}>
             <p>{p.name}</p>
             <p>{p.price} ₽</p>
             <button onClick={delButtonHandler}>Убрать</button>

@@ -1,7 +1,7 @@
 import md5 from 'md5';
 import { io, Socket } from 'socket.io-client';
 import CONFIG, { MEDIATOR, EMESSAGES } from '../../config';
-import { IDictionaries, IProduct, TAnswer, TUser } from "./types";
+import { IDictionaries, IOrder, IProduct, IProductInCart, TAnswer, TUser } from "./types";
 import Mediator from '../Mediator/Mediator';
 
 const HOST = CONFIG.HOST;
@@ -51,6 +51,13 @@ class Server {
                 this.mediator.call(UPDATE_USER_ADDRESS, result);
             }
         });
+        this.socket.on(MEDIATOR.EVENTS.CREATE_ORDER, (data: TAnswer<Boolean>) => {
+            const result = this._validate(data);
+            if (result) {
+                const { CREATE_ORDER } = this.mediator.getEventTypes();
+                this.mediator.call(CREATE_ORDER, result);
+            }
+        });
 
     }
 
@@ -63,7 +70,7 @@ class Server {
         return null;
     }
 
-    private async request<T>(method: string, params: { [key: string]: string | number } = {}): Promise<T | null> {
+    private async request<T>(method: string, params: { [key: string]: any } = {}): Promise<T | null> {
         try {
             params.method = method;
             const token = this.mediator.get<string>(MEDIATOR.TRIGGERS.GET_TOKEN);
@@ -128,6 +135,76 @@ class Server {
         return this.request<IDictionaries>('getDictionaries', {});
     }
 
+    async createOrder(products: IProductInCart[]): Promise<Boolean | null> {
+        return this.request<Boolean>('createOrder', { products });
+    }
+
+    async getOrders(): Promise<IOrder[] | null> {
+        return this.request<IOrder[]>('getOrdersByUser', {});
+    }
+
+    async setOrders() {
+        const orders = await this.getOrders();
+        if (orders) {
+            this.mediator.call(MEDIATOR.EVENTS.SET_ORDERS, [...orders]);
+        }
+    }
+
+    async cancelOrder(orderId: number) {
+        return this.request<Boolean>('cancelOrder', { orderId });
+    }
+
+    async createProduct(props: {
+        name: string,
+        price: number,
+        brandId: number,
+        genderId: number,
+        typeId: number,
+        sizeIds: number[],
+        colorIds: number[],
+        stockQuantity: number,
+        description: string,
+        image: string
+    }) {
+        return this.request<Boolean>('createProduct', { props });
+    }
+
+    async changeProduct(props: {
+        productId: number;
+        name?: string,
+        price?: number,
+        brandId?: number,
+        genderId?: number,
+        typeId?: number,
+        sizeIds?: number[],
+        colorIds?: number[],
+        stockQuantity?: number,
+        description?: string,
+        image?: string
+    }) {
+        return this.request<Boolean>('changeProduct', { props });
+    }
+
+    async changeOrderStatus(props: {
+        orderId: number,
+        statusId: number,
+    }) {
+        return this.request<Boolean>('changeOrderStatus', { props });
+    }
+
+    async addDictionaryData(props: {
+        dictionary: string
+        data: any
+    }) {
+        return this.request<Boolean>('addDictionaryData', { props });
+    }
+
+    async deleteDictionaryData(props: {
+        dictionary: string,
+        dataId: number,
+    }) {
+        return this.request<Boolean>('deleteDictionaryData', { props });
+    }
 }
 
 export default Server;

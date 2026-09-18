@@ -8,13 +8,22 @@ const Account: React.FC<{}> = () => {
     const server = useContext(ServerContext);
     const mediator = useContext(MediatorContext);
     const [ login, setLogin ] = useState<String | null>(null);
-    const { SET_TO_ACCOUNT_INFO } = mediator.getEventTypes(); 
+    const { 
+        SET_TO_ACCOUNT_INFO,
+        
+    } = mediator.getEventTypes(); 
     const { GET_USER } = mediator.getTriggerTypes();   
     const accountInfoClickHandler = () => mediator.call(SET_TO_ACCOUNT_INFO);
 
     const logoutClickHandler = () => server.logout();
 
-    useEffect(() => setLogin(mediator.get<TUser>(GET_USER)!.login));
+    useEffect(() => {
+        setLogin(mediator.get<TUser>(GET_USER)!.login);
+    });
+
+    useEffect(() => {
+        server.setOrders();
+    }, [])
 
     return (
         <div className={styles.content}>

@@ -30,6 +30,13 @@ export interface IProduct {
     description: string;
 }
 
+
+export interface IProductInCart extends IProduct {
+    color: string;
+    size: string;
+}
+
+
 export interface IDictionaryItem {
     id: number;
     type: string;
@@ -43,4 +50,18 @@ export interface IDictionaries {
     sizes: IDictionaryItem[];
     colors: IDictionaryItem[];
     underwearSizes: IDictionaryItem[];
+}
+
+export interface IOrder {
+    id: number;
+    userId: number;
+    orderTime: string;
+    statusId: number;
+    products: {
+        productId: number;
+        quantity: number;
+        size: number;
+        color: number;
+    };
+
 }

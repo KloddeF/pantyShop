@@ -1,0 +1,57 @@
+.divOrder {
+        border: 1px solid #e91e63;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(233, 30, 99, 0.08);
+        transition: box-shadow 0.15s ease, transform 0.15s ease;
+        justify-content: center;
+        align-items: center;
+
+
+    .pOrder {
+        margin: 0;
+        font-size: 20px;
+        color: #333;
+        line-height: 1.4;
+        font-weight: 500;
+    }
+
+    .buttonOrder {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        border-radius: 50%;
+        color: #999;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0;
+        transition: all 0.15s ease;
+
+        &:hover {
+            color: #e74c3c;
+            border-color: #e74c3c;
+            background: #fde8e8;
+        }
+
+        &:active {
+            transform: scale(0.92);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+
+            &:hover {
+                color: #999;
+                border-color: rgba(0, 0, 0, 0.12);
+                background: none;
+            }
+        }
+    }
+}

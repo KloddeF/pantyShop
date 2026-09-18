@@ -52,3 +52,39 @@
     padding: 20px 20px 24px;
   }
 }
+.p {
+  margin: 8px 0 4px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+
+.cartButton {
+  margin-top: 8px;
+  padding: 12px 20px;
+  background: #e91e63;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+
+  &:hover {
+    background: #d0195a;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    background: #f0a0bd;
+    cursor: not-allowed;
+  }
+}

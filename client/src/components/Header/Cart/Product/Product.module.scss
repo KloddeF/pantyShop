@@ -1,0 +1,56 @@
+.divProduct {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #e91e63;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(233, 30, 99, 0.06);
+  transition: box-shadow 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 3px 10px rgba(233, 30, 99, 0.15);
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+
+    &:first-of-type {
+      font-weight: 500;
+    }
+
+    &:last-of-type {
+      color: #e91e63;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+  }
+
+  button {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid rgba(233, 30, 99, 0.4);
+    border-radius: 6px;
+    color: #e91e63;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: #fff;
+      background: #e91e63;
+      border-color: #e91e63;
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+}

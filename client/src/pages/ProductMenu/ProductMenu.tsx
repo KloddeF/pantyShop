@@ -21,7 +21,14 @@ const ProductMenu: React.FC<ProductModalProps> = (props) => {
         }
     };
 
-    const addProductToCart = (p: IProduct) => mediator.call(ADD_PRODUCT_TO_CART, p);
+    const addProductToCart = (p: IProduct) => mediator.call(
+        ADD_PRODUCT_TO_CART,
+        {
+            ...p,
+            size: selectedSize,
+            color: selectedColor
+        }
+    );
 
 
     return (

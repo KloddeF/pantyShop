@@ -1,4 +1,4 @@
-import { IProduct, TUser  } from "../server/types";
+import { IOrder, IProduct, TUser  } from "../server/types";
 import Mediator from '../Mediator/Mediator';
 import { MEDIATOR } from "../../config";
 
@@ -7,6 +7,7 @@ const TOKEN = 'token';
 class Store {
     user: TUser | null = null;
     currentCart: IProduct[] = [];
+    orders: IOrder[] = [];
     mediator: Mediator;
 
     constructor(mediator: Mediator) {
@@ -21,16 +22,24 @@ class Store {
         this.mediator.subscribe(MEDIATOR.EVENTS.SHOW_ERROR, (message: string) => this.handleError(message));
         this.mediator.subscribe(MEDIATOR.EVENTS.ADD_PRODUCT_TO_CART, (p) => this.handleAddProductToCart(p));
         this.mediator.subscribe(MEDIATOR.EVENTS.DEL_PRODUCT_FROM_CART, (p) => this.handleDelProductFromCart(p));
+        this.mediator.subscribe(MEDIATOR.EVENTS.CLEAR_CART, () => this.handleClearCart());
+        this.mediator.subscribe(MEDIATOR.EVENTS.SET_ORDERS, (orders) => this.handleSetOrders(orders));
+
 
         this.mediator.set(MEDIATOR.TRIGGERS.GET_TOKEN, () => this.getToken());
         this.mediator.set(MEDIATOR.TRIGGERS.GET_GUID, () => this.getGuid());
-        this.mediator.set(MEDIATOR.TRIGGERS.GET_USER, () => this.getUser())
-        this.mediator.set(MEDIATOR.TRIGGERS.GET_CURRENT_CART, () => this.getCurrentCart())
+        this.mediator.set(MEDIATOR.TRIGGERS.GET_USER, () => this.getUser());
+        this.mediator.set(MEDIATOR.TRIGGERS.GET_CURRENT_CART, () => this.getCurrentCart());
+        this.mediator.set(MEDIATOR.TRIGGERS.GET_ORDERS, () => this.getOrders());
+
     }
 
     handleLogin(data: TUser): void {
         console.log('Login:', data);
         this.user = data;
+        if (this.user.roleId === 2) {
+            this.mediator.call(MEDIATOR.EVENTS.SHOW_ADMIN_PANEL_BUTTON);
+        }
         if (data.token) {
             localStorage.setItem(TOKEN, data.token);
         }
@@ -39,6 +48,9 @@ class Store {
     handleRegistration(data: TUser): void {
         console.log('Registration:', data);
         this.user = data;
+        if (this.user.roleId === 2) {
+            this.mediator.call(MEDIATOR.EVENTS.SHOW_ADMIN_PANEL_BUTTON);
+        }
         if (data.token) {
             localStorage.setItem(TOKEN, data.token);
         }
@@ -63,6 +75,16 @@ class Store {
         );
     }
 
+    handleClearCart(): void {
+        this.currentCart.length = 0;
+        this.mediator.call(MEDIATOR.EVENTS.UPDATE_CART);
+    }
+
+    handleSetOrders(orders: IOrder[]): void {
+        this.orders = orders;
+        this.mediator.call(MEDIATOR.EVENTS.UPDATE_CART);
+    }
+
     handleError(message: string): void {
         console.error('Error:', message);
     }
@@ -81,6 +103,10 @@ class Store {
 
     getCurrentCart(): IProduct[] {
         return this.currentCart;
+    }
+
+    getOrders(): IOrder[] {
+        return this.orders;
     }
 }
 
