@@ -36,7 +36,7 @@ const ProductMenu: React.FC<ProductModalProps> = (props) => {
             <div className="menu-body">
                 <button className="close-btn" onClick={onClose}>✕</button>
                 <div className="menu-image">
-                    <span></span>
+                    <img src={`/images/products/${product.image}`} />
                 </div>
 
                 <div className="menu-info">

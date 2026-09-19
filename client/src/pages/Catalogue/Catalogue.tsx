@@ -168,7 +168,7 @@ const Catalogue: React.FC<IBasePage> = (props) => {
                     sortedProducts.map(p => (
                         <div key={p.id} className="product-card">
                             <div className="product-image">
-                                <span></span>
+                                <img src={`/images/products/${p.image}`} />
                                 <button
                                     className="product-more"
                                     onClick={() => setSelectedProduct(p)}

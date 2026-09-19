@@ -28,6 +28,7 @@ export interface IProduct {
     colors: string[];
     stockQuantity: number;
     description: string;
+    image: string;
 }
 
 
